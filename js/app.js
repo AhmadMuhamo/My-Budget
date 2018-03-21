@@ -1,14 +1,11 @@
-/**Budget Controller */
-var budgetController = (() => {
+var budgetController = ( () => {
 
 })();
 
-/**UI Controller */
 var uiController = (() => {
 
 })();
 
-/**APP Controller */
 var controller = ((bc, uc) => {
-
+    
 })(budgetController, uiController);
