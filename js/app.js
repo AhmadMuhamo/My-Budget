@@ -81,6 +81,16 @@ const budgetController = (() => {
                 percentage: data.percentage
             };
         },
+        deleteBudgetItem: (type, id) => {
+            let ids, index;
+
+            ids = data.items[type].map(el => el.id);
+            index = ids.indexOf(id);
+
+            if (index !== -1) {
+                data.items[type].splice(index, 1);
+            }
+        },
         test: () => {
             console.log(data);
         }
@@ -101,7 +111,8 @@ const uiController = (() => {
         budgetValue: '.budget__value',
         budgetIncValue: '.budget__income--value',
         budgetExpValue: '.budget__expenses--value',
-        budgetExpPercentage: '.budget__expenses--percentage'
+        budgetExpPercentage: '.budget__expenses--percentage',
+        container: '.container'
 
     };
 
@@ -117,13 +128,13 @@ const uiController = (() => {
             let html,selector;
 
             if (type === 'inc') {
-                html = `<div class="item clearfix" id="income-${obj.id}"><div class="item__description">${obj.description}</div>
+                html = `<div class="item clearfix" id="inc-${obj.id}"><div class="item__description">${obj.description}</div>
                 <div class="right clearfix"><div class="item__value">${obj.value}</div>
                 <div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>`
 
                 selector = DOMStrings.incomeList;
             } else {
-                html = `<div class="item clearfix" id="expense-${obj.id}"><div class="item__description">${obj.description}</div>
+                html = `<div class="item clearfix" id="exp-${obj.id}"><div class="item__description">${obj.description}</div>
                 <div class="right clearfix"><div class="item__value">- ${obj.value}</div><div class="item__percentage">21%</div>
                 <div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div>
                 </div></div>`
@@ -132,6 +143,10 @@ const uiController = (() => {
             }
 
             document.querySelector(selector).insertAdjacentHTML('beforeend', html);
+        },
+        deleteListItem: (id) => {
+            let element = document.getElementById(id);
+            element.parentNode.removeChild(element);
         },
         clearInputFields: () => {
             let inputFields,fieldsArr;
@@ -169,7 +184,9 @@ const controller = ((bc, uic) => {
                 addItem();
             }
         });
-    }
+
+        document.querySelector(DOM.container).addEventListener('click', deleteItem);
+    };
 
     let updateBudget = () => {
         /** 1- Calculate the budget */
@@ -201,6 +218,26 @@ const controller = ((bc, uic) => {
             updateBudget();
         }
         
+    };
+
+    let deleteItem = (event) => {
+        let itemID, splitID, type, id;
+        itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+
+        if(itemID) {
+            splitID = itemID.split('-');
+            type = splitID[0];
+            id = parseInt(splitID[1]);
+
+            /** 1- Delete the item from the 'data' object*/
+            bc.deleteBudgetItem(type, id);
+
+            /** 2- Delete the item from the UI */
+            uic.deleteListItem(itemID);
+
+            /** 3- update and display the new budget */
+            updateBudget();
+        }
     };
     
     return {
