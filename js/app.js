@@ -152,7 +152,7 @@ const uiController = (() => {
             int = int.substr(0, int.length - 3) + ',' + int.substr(int.length - 3, 3);
         }
 
-        return (type === 'exp' ? '-' : '+') + ' ' + int + '.' + dec;
+        return (type === 'exp' ? '-' : type === 'inc' ? '+' : '') + ' ' + int + '.' + dec;
     };
 
     let nodeListForEach = (list, callback) => {
@@ -203,7 +203,7 @@ const uiController = (() => {
         },
         displayBudget: (obj) => {
             let type;
-            obj.budget > 0 ? type = 'inc' : type = 'exp';
+            obj.budget > 0 ? type = 'inc' : obj.budget < 0 ? type = 'exp' : type = 'normal';
 
             document.querySelector(DOMStrings.budgetValue).textContent = formatNumber(obj.budget, type);
             document.querySelector(DOMStrings.budgetIncValue).textContent = formatNumber(obj.totalInc, 'inc');
