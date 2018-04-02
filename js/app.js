@@ -26,7 +26,7 @@ const budgetController = (() => {
         }
     };
 
-    let calculateTotal = (type) => {
+    const calculateTotal = (type) => {
         let sum = 0;
         data.items[type].forEach(el => sum += el.value);
         data.total[type] = sum;
@@ -135,7 +135,7 @@ const uiController = (() => {
 
     };
 
-    let formatNumber = (num, type) => {
+    const formatNumber = (num, type) => {
         let splitNum, int, dec;
         /**+ or - before number 
          * 2 decimal points
@@ -155,7 +155,7 @@ const uiController = (() => {
         return (type === 'exp' ? '-' : type === 'inc' ? '+' : '') + ' ' + int + '.' + dec;
     };
 
-    let nodeListForEach = (list, callback) => {
+    const nodeListForEach = (list, callback) => {
         for (let i = 0; i < list.length; i++) {
             callback(list[i], i);
         }
@@ -274,29 +274,29 @@ const controller = ((bc, uic) => {
         document.querySelector(DOM.inputType).addEventListener('change', uic.changeType);
     };
 
-    let updateBudget = () => {
+    const updateBudget = () => {
         /** 1- Calculate the budget */
         bc.calculateBudget();
 
         /** 2- Return the budget */
-        let budget = bc.getBudget();
+        const budget = bc.getBudget();
 
         /** 3-Display the budget on the UI */
         uic.displayBudget(budget);
     };
 
-    let updatePercentages = () => {
+    const updatePercentages = () => {
         /** 1- Calculate the percentages */
         bc.calculatePercentages();
 
         /** 2- Read percentages from the budget controller */
-        let percentages = bc.getPercentages();
+        const percentages = bc.getPercentages();
 
         /** 3- Update the UI with the new percentages */
         uic.displayPercentages(percentages);
     };
 
-    let addItem = () => {
+    const addItem = () => {
         let input, newItem;
         /** Get the Input Data */
         input = uic.getInput();
@@ -320,7 +320,7 @@ const controller = ((bc, uic) => {
 
     };
 
-    let deleteItem = (event) => {
+    const deleteItem = (event) => {
         let itemID, splitID, type, id;
         itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
 
