@@ -175,13 +175,13 @@ const uiController = (() => {
             if (type === 'inc') {
                 html = `<div class="item clearfix" id="inc-${obj.id}"><div class="item__description">${obj.description}</div>
                 <div class="right clearfix"><div class="item__value">${formatNumber(obj.value, type)}</div>
-                <div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>`
+                <div class="item__delete"><button class="item__delete--btn"><i class="fa fa-times-circle"></i></button></div></div></div>`
 
                 selector = DOMStrings.incomeList;
             } else {
                 html = `<div class="item clearfix" id="exp-${obj.id}"><div class="item__description">${obj.description}</div>
                 <div class="right clearfix"><div class="item__value">${formatNumber(obj.value, type)}</div><div class="item__percentage">21%</div>
-                <div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div>
+                <div class="item__delete"><button class="item__delete--btn"><i class="fa fa-times-circle"></i></button></div>
                 </div></div>`
 
                 selector = DOMStrings.expenseList;
